@@ -20,4 +20,32 @@ class SessionManager(context: Context) {
     fun obtenerToken(): String = prefs.getString("token", "") ?: ""
     fun haySesionActiva(): Boolean = obtenerIdUsuario() != -1
     fun cerrarSesion() = prefs.edit().clear().apply()
+
+    fun obtenerAlergias(): Set<String> {
+        val porDefecto = setOf("Leche", "Frutos de cáscara")
+        return prefs.getStringSet("alergiasUsuario", porDefecto)?.toSet() ?: porDefecto
+    }
+
+    fun guardarAlergias(alergias: Set<String>) {
+        prefs.edit()
+            .putStringSet("alergiasUsuario", alergias)
+            .apply()
+    }
+
+    fun esModoOscuro(): Boolean = prefs.getBoolean("darkMode", false)
+
+    fun guardarModoOscuro(activo: Boolean) {
+        prefs.edit()
+            .putBoolean("darkMode", activo)
+            .apply()
+    }
+
+    fun obtenerTamanoTexto(): String = prefs.getString("fontSize", "normal") ?: "normal"
+
+    fun guardarTamanoTexto(tamano: String) {
+        prefs.edit()
+            .putString("fontSize", tamano)
+            .apply()
+    }
+
 }
